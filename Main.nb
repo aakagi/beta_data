@@ -1,0 +1,67 @@
+TabView[{"Social Media Prescence" -> Manipulate[
+    Switch[parameter,
+     "ConsumerHappiness",
+     Column@{chart, 
+       "Based on a natural language processing/machine learning \
+classifier from posts on the company page. The posts are analyzed for \
+sentiment."},
+     "LikeNetwork", community,
+     "CommunityGraphPlot", (CommunityGraphPlot[community, 
+       FindGraphCommunities[community], 
+       CommunityLabels -> {"India", "United States", "Brazil", 
+         "China"}]),
+     _,
+     SocialMediaData[{"Facebook", company}, parameter, "FormattedData"]
+     ],
+    {{company, "14856729724", "Company"}, {"14856729724" -> "Gap", 
+      "1500573333514248" -> "H&M", "15087023444" -> "Nike", 
+      "182162001806727" -> "Adidas", "6797246895" -> "RalphLauren", 
+      "6857074038" -> "AmericanEagle", "34296534191" -> "Columbia", 
+      "104067709628773" -> "Vf Corp", "57143807607" -> "Aeropostale"}},
+    {{parameter, "ActivityRecentHistory", 
+      "Analysis Type"}, {"ActivityRecentHistory", "ActivityTypes", 
+      "ActivityWeeklyDistribution", "Feeds", "LikeCount", "Link", 
+      "PageID", "Photos", "Picture", "Posts", "TaggedPhotos", 
+      "TaggedPosts", "TalkingAboutCount", "UserData", 
+      "WallMostCommentedPost", "WallMostLikedPost", "WallPostLength", 
+      "WallPostStatistics", "WallTopCommenter", 
+      "WallWeeklyAppActivity", "WallWordFrequencies", "Website", 
+      "ConsumerHappiness", "LikeNetwork", "CommunityGraphPlot"}}
+     , ContentSize -> {600, 400}], 
+  "Financial Time-series Data" -> 
+   Manipulate[
+    Column@{Row@{Text[
+         Style["All data below extracted using", Black, 24]], 
+        Text[Style[" Bloomberg API", Black, Italic, 24]]}, 
+      Row[{Switch[x, 3, Rotate["Employees", 90 Degree], _, 
+         Rotate["Monetary Value", 90 Degree]], 
+        If[x == 5, 
+         DateListPlot[FinancialData["GPS", "Jan. 1, 2000"], 
+          Joined -> True, ImageSize -> 500], 
+         DateListPlot[fulldata[[x]], Joined -> True, 
+          ImageSize -> 500]]}]}, {{x, 5, ""}, {1 -> "GAP px last", 
+      2 -> "GAP Net Income per Employee", 
+      3 -> "GAP Number of Employees", 4 -> "AEO PX LAST", 
+      5 -> "GSP stock prices"}, ControlType -> RadioButton}, 
+    ContentSize -> {600, 400}],
+  "Live Posting to Facebook/Twitter" -> 
+   Manipulate[
+    Column@{"The following are some future steps for the development \
+of this application:", "", 
+      "This application can be CloudDeployed[] to allow any company \
+to use this tool. Wolfram's CloudDeploy does not yet support \
+SocialMediaData, but the source code can be edited to incorporate \
+CloudDeploy[] once the functionality is included.", "", 
+      "Live Posting to Facebook/Twitter is available through the \
+ServiceExecute[] function, which is not yet fully supported in \
+Mathematica. Once Mathematica 10 has full support of the \
+ServiceExecute[] function, companies will be able to automatically \
+post directly to their Facebook and Twitter feeds.", "", 
+      "These posts can easily be incorporated to interact with data \
+regarding the social media impact/financial data."}
+    , {{company, "14856729724", "Company"}, {"14856729724" -> "Gap", 
+      "1500573333514248" -> "H&M", "15087023444" -> "Nike", 
+      "182162001806727" -> "Adidas", "6797246895" -> "RalphLauren", 
+      "6857074038" -> "AmericanEagle", "34296534191" -> "Columbia", 
+      "104067709628773" -> "Vf Corp", 
+      "57143807607" -> "Aeropostale"}}, ContentSize -> {600, 400}]}]
