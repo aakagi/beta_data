@@ -1,0 +1,17 @@
+data = SocialMediaData[{"Facebook", "14856729724"}, "TaggedPosts", 
+   "FormattedData"];
+datalist = {};
+For[i = 1, i <= Length[data], i++,
+  For[j = 1, j <= Length[data[[i]]], j++,
+    If[data[[i]][[j]][[1]] == "Message", 
+     AppendTo[datalist, data[[i]][[j]][[2]]]]
+    ];
+  ];
+positive = 0;
+negative = 0;
+For[i = 1, i <= Length[datalist], i++,
+  If[Classify["Sentiment", datalist[[i]]] == "Positive", positive++, 
+   negative++]
+  ];
+chart = PieChart3D[{positive, negative}, 
+   ChartLabels -> {"Positive", "Negative"}];
