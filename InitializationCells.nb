@@ -38,7 +38,22 @@ fulldata = {{{{{2012, 1, 31}, 14.09`}, {{2012, 2, 29},
       46.15`}, {{2014, 9, 30}, 41.69`}, {{2014, 10, 31}, 
       37.89`}, {{2014, 11, 28}, 39.6`}, {{2014, 12, 31}, 42.11`}}}};
 SocialMediaData["Facebook", "Friends"] // Short;
-chart = PieChart3D[{10, 15}, ChartLabels -> {"Positive", "Negative"}, 
-   ImageSize -> 500];
+data = SocialMediaData[{"Facebook", "14856729724"}, "TaggedPosts", 
+   "FormattedData"];
+datalist = {};
+For[i = 1, i <= Length[data], i++,
+  For[j = 1, j <= Length[data[[i]]], j++,
+    If[data[[i]][[j]][[1]] == "Message", 
+     AppendTo[datalist, data[[i]][[j]][[2]]]]
+    ];
+  ];
+positive = 0;
+negative = 0;
+For[i = 1, i <= Length[datalist], i++,
+  If[Classify["Sentiment", datalist[[i]]] == "Positive", positive++, 
+   negative++]
+  ];
+chart = PieChart3D[{positive, negative}, 
+   ChartLabels -> {"Positive", "Negative"}];
 community = 
   SocialMediaData["Facebook", "LikeNetwork", "FormattedData"];
